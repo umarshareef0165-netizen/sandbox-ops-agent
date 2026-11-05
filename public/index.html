@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Sandbox Ops Agent — Vultr Agent Rush</title>
+<style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 16px}button{padding:8px 14px}pre{background:#111;color:#eee;padding:12px;white-space:pre-wrap}.warn{color:#a00;font-weight:bold}</style></head>
+<body><h1>Sandbox Ops Agent</h1>
+<p>Multi-agent demo: Planner → Coder → <b>Sandboxed Executor</b> → Verifier. Mock Vultr sandbox mode — no real cloud, no keys.</p>
+<label>Task: <input id="task" size="60" value="Add up 12, 28 and 40"></label>
+<button onclick="run()">Run safely</button>
+<button onclick="containment()">Show containment block</button>
+<pre id="out">Ready.</pre>
+<script>
+async function post(p,b){const r=await fetch(p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});return r.json();}
+async function run(){document.getElementById('out').textContent=JSON.stringify(await post('/api/run',{task:document.getElementById('task').value}),null,2);}
+async function containment(){document.getElementById('out').textContent=JSON.stringify(await post('/api/containment-demo',{code:'rm -rf /'}),null,2);}
+</script></body></html>
